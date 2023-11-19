@@ -1,10 +1,10 @@
 import {Control} from "../model/Control.ts";
-import {ETypes} from "../enums/ETypes.ts";
 import {IInputOptions} from "../interfaces/IInputOptions.ts";
+import {ITypes} from "../interfaces/ITypes";
+import {ETypes} from "../enums/ETypes";
 
 export class Input extends Control {
-    type: ETypes;
-    opts?: any;
+    type: any;
     constructor(type: ETypes, name: string, label: string, opts?: IInputOptions) {
         super(name, label);
         this.type = type;
@@ -14,13 +14,6 @@ export class Input extends Control {
 
     create() {
         const input = document.createElement('input');
-        if (this.type === ETypes.submit) {
-            input.setAttribute('type', this.type);
-            input.setAttribute('value', this.label);
-            input.classList.add('btn', 'btn-primary', 'w-100', 'mt-3');
-            this.dom_element.appendChild(input);
-            return this;
-        }
         const label = document.createElement('label');
         const valid = document.createElement('span');
         valid.classList.add('valid-feedback');
@@ -52,6 +45,7 @@ export class Input extends Control {
         this.dom_element.appendChild(invalid);
         return this;
     }
+
 
 
 }
