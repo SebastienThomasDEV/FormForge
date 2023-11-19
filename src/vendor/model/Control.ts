@@ -12,6 +12,5 @@ export class Control implements IAttributes {
         this.name = name;
         this.label = label;
     }
-
-
+    
 }

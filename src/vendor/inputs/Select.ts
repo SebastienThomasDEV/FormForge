@@ -15,11 +15,26 @@ export class Select extends Control {
         const select = document.createElement('select');
         const label = document.createElement('label');
         const valid = document.createElement('span');
-        valid.classList.add('valid-feedback');
-        valid.innerText = 'Looks good!';
         const invalid = document.createElement('span');
-        invalid.classList.add('invalid-feedback');
+        valid.innerText = 'Looks good!';
         invalid.innerText = 'Looks bad!';
+        valid.classList.add('valid-feedback');
+        select.classList.add('form-select');
+        label.classList.add('form-label');
+        label.innerText = this.label;
+        for (const choice of this.choices) {
+            const option = document.createElement('option');
+            option.setAttribute('value', choice.value);
+            option.innerText = choice.label;
+            select.appendChild(option);
+        }
+        for (let i = 0; i < this.choices.length; i++) {
+            const option = document.createElement('option');
+            option.setAttribute('value', this.choices[i].value);
+            option.innerText = this.choices[i].label;
+            select.appendChild(option);
+        }
+        invalid.classList.add('invalid-feedback');
         select.setAttribute('name', this.name);
         select.setAttribute('id', this.name);
         label.setAttribute('for', this.name);
@@ -32,5 +47,9 @@ export class Select extends Control {
                 select.setAttribute(keys[i], this.opts[keys[i]]);
             }
         }
+        this.dom_element.appendChild(label);
+        this.dom_element.appendChild(select);
+        this.dom_element.appendChild(valid);
+        this.dom_element.appendChild(invalid);
     }
 }
