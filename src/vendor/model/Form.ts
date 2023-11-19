@@ -1,6 +1,7 @@
 import {Control} from "./Control.ts";
 import {IFormOptions} from "./../interfaces/IFormOptions.ts";
 import {Validator} from "./Validator";
+import {TControls} from "../types/TControls";
 
 export class Form {
     private readonly action: string;
@@ -61,7 +62,7 @@ export class Form {
         return this;
     }
 
-    add(control: Control) {
+    add(control: TControls) {
         this.values[control.name] = '';
         this.controls.push(control);
         this._form.appendChild(control.dom_element);
