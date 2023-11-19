@@ -31,7 +31,10 @@ export class Form {
         submit.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log(this.values);
+            this._form.reset();
+            if (Validator.formCheck(this.controls)) {
+                console.log(this.values);
+            }
         })
         this._form.appendChild(submit);
         return this;
@@ -48,13 +51,13 @@ export class Form {
         this._form.appendChild(title);
         this._form.setAttribute('action', this.action);
         this._form.setAttribute('method', this.method);
+        this._form.classList.add('p-4', 'bg-light', 'm-3', 'rounded', 'd-flex', 'flex-column', 'gap-2', 'shadow-lg');
         if (this.opts) {
             const keys = Object.keys(this.opts);
             for (let i = 0; i < keys.length; i++) {
                 this._form.setAttribute(keys[i], this.opts[keys[i]]);
             }
         }
-        this._form.classList.add('p-4', 'bg-light', 'm-3', 'rounded', 'd-flex', 'flex-column', 'gap-2', 'shadow-lg');
         return this;
     }
 
@@ -91,6 +94,7 @@ export class Form {
                 const target = e.target as HTMLInputElement;
                 const keys = Object.keys(this.values);
                 if (!control.checked) {
+                    // @ts-ignore
                     target.addEventListener('input', (e: Event) => {
                         control.checked = true;
                         for (let i = 0; i < keys.length; i++) {
@@ -110,17 +114,16 @@ export class Form {
                             target.classList.add('is-invalid');
                         }
                     });
+                    // @ts-ignore
                     target.addEventListener('blur', (e: Event) => {
                         setTimeout(() => {
                             target.classList.remove('is-valid');
-                        }, 1500)
+                        }, 1000)
                         for (let i = 0; i < keys.length; i++) {
-                            console.log(keys[i]);
                             if (keys[i] === target.name) {
                                 this.values[keys[i]] = target.value;
                             }
                         }
-                        console.log(this.values);
                     });
                 }
             });

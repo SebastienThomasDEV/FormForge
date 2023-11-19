@@ -1,7 +1,6 @@
 import {Control} from "../model/Control.ts";
 import {IInputOptions} from "../interfaces/IInputOptions.ts";
-import {ITypes} from "../interfaces/ITypes";
-import {ETypes} from "../enums/ETypes";
+import {ETypes} from "../types/ETypes";
 
 export class Input extends Control {
     type: any;

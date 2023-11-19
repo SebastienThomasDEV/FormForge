@@ -1,10 +1,15 @@
 // import {Form} from "./Form";
 // import {Control} from "./Control";
 import {IValidatorOptions} from "../interfaces/IValidatorOptions";
+import {Control} from "./Control";
 
 export class Validator {
+    // @ts-ignore
     static controlCheck(type: string, token: string, opts?: IValidatorOptions): boolean {
         let valid = false;
+        if (token === '') {
+            return valid;
+        }
         switch (type) {
             case 'email':
                 valid = new RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$').test(token);
@@ -28,6 +33,18 @@ export class Validator {
                 valid = false;
                 break;
         }
+        return valid;
+    }
+
+    static formCheck(controls: Control[]): boolean {
+        let valid = true;
+        controls.forEach((control) => {
+            if (control instanceof HTMLInputElement) {
+                if (!Validator.controlCheck(control.type, control.value)) {
+                    valid = false;
+                }
+            }
+        });
         return valid;
     }
 }
