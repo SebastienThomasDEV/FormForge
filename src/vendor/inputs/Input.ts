@@ -1,10 +1,10 @@
 import {Control} from "../model/Control.ts";
 import {IInputOptions} from "../interfaces/IInputOptions.ts";
-import {ETypes} from "../types/ETypes";
+import {TInputs} from "../types/TInputs.ts";
 
 export class Input extends Control {
-    type: any;
-    constructor(type: ETypes, name: string, label: string, opts?: IInputOptions) {
+    type: TInputs;
+    constructor(type: TInputs, name: string, label: string, opts?: IInputOptions) {
         super(name, label);
         this.type = type;
         this.opts = opts;
