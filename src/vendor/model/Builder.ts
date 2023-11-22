@@ -18,7 +18,6 @@ export class Builder {
         form.classList.add('needs-validation');
         const body = document.createElement('div');
         body.id = 'body';
-        body.classList.add('row');
         form.appendChild(body);
         const submit = document.createElement('button');
         submit.setAttribute('type', 'submit');
@@ -43,12 +42,28 @@ export class Builder {
                 input.setAttribute('id', config.id);
                 input.setAttribute('name', config.id);
                 input.setAttribute('class', 'form-control');
-                if (config.options) {
-                    for (const [key, value] of Object.entries(config.options)) {
+                input.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(input);
+                if (config.attrs) {
+                    for (const [key, value] of Object.entries(config.attrs)) {
                         input.setAttribute(key, value);
                     }
                 }
-                control.appendChild(input);
+                if (config.options) {
+                    if (config.options.helperText) {
+                        input.onfocus = () => {
+                            document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
+                        }
+                        input.onblur = () => {
+                            document.getElementById(`${config.id}Help`)!.classList.add('d-none');
+                        }
+                        const helper = document.createElement('small');
+                        helper.classList.add('form-text', 'text-muted');
+                        helper.textContent = config.options.helperText;
+                        helper.id = `${config.id}Help`;
+                        control.appendChild(helper);
+                    }
+                }
                 break;
             //
             // case 'textarea':

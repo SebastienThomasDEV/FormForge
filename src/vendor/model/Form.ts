@@ -51,6 +51,16 @@ export class Form {
     }
 
     add(control: TControls) {
+        if (control.id === '' || control.label === '') {
+            throw new Error('You must specify valid parameters for your control');
+        } else if (control.id === undefined || control.label === undefined) {
+            throw new Error('Some parameters are missing for your control');
+        }
+        for (let i = 0; i < this.controls.length; i++) {
+            if (this.controls[i].id === control.id) {
+                throw new Error('You cannot have two controls with the same id');
+            }
+        }
         this.controls.push(control);
         this._form.querySelector('#body')!.appendChild(control.getControl());
         return this;

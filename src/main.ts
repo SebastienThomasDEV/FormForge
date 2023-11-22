@@ -25,7 +25,15 @@ window.onload = function () {
         },
     )
 
-    form.add(new Input({label: 'first_name', id: 'first_name', type: 'text'}))
+    form.add(new Input(
+        {
+            label: 'first_name',
+            id: 'first_name',
+            type: 'text',
+            options: {
+                helperText: 'Must be at least 2 characters long',
+            }
+        }))
         .add(new Input({label: 'last_name', id: 'last_name', type: 'text'}))
         .render(document.body);
 
