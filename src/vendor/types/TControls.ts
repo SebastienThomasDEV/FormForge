@@ -1,5 +1,5 @@
 import {Input} from "../inputs/Input";
-import {Select} from "../inputs/Select";
-import {RepeatedPassword} from "../inputs/RepeatedPassword";
+// import {Select} from "../inputs/Select";
+// import {RepeatedPassword} from "../inputs/RepeatedPassword";
 
-export type TControls  = Input | RepeatedPassword | Select
+export type TControls  = Input

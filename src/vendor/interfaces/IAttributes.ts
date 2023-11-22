@@ -1,4 +1,4 @@
 export interface IAttributes {
     label: string;
-    name: string;
+    id: string;
 }

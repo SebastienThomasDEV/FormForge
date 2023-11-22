@@ -1,15 +1,11 @@
 import {IAttributes} from "../interfaces/IAttributes";
 
 export class Control implements IAttributes {
-    name: string;
+    id: string;
     label: string;
-    dom_element: HTMLDivElement;
-    opts?: any;
-    checked?: boolean;
 
-    constructor(name: string, label: string) {
-        this.dom_element = document.createElement('div');
-        this.name = name;
+    constructor(id: string, label: string) {
+        this.id = id;
         this.label = label;
     }
     

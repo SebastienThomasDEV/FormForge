@@ -29,6 +29,9 @@ export class Validator {
             case 'date':
                 valid = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$').test(token);
                 break;
+            case 'checkbox':
+                valid = true;
+                break;
             default:
                 valid = false;
                 break;

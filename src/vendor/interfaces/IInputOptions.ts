@@ -19,9 +19,4 @@ export interface IInputOptions {
     multiple?: boolean;
     src?: string;
     alt?: string;
-    height?: number;
-    width?: number;
-    usemap?: string;
-    ismap?: boolean;
-    list?: string;
 }
