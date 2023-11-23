@@ -2,52 +2,51 @@
 // import {Control} from "./Control";
 import {IValidatorOptions} from "../interfaces/IValidatorOptions";
 import {Control} from "./Control";
+import {Input} from "../inputs/Input";
 
 export class Validator {
     // @ts-ignore
-    static controlCheck(type: string, token: string, opts?: IValidatorOptions): boolean {
+    static inputCheck(input: Input, config: IValidatorOptions): boolean {
         let valid = false;
-        if (token === '') {
+        const control = input.control as HTMLInputElement;
+        if (control.value === '' && !config.allowEmpty) {
             return valid;
+        } else if (control.value === '' && config.allowEmpty) {
+            return true;
         }
-        switch (type) {
-            case 'email':
-                valid = new RegExp('^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$').test(token);
-                break;
-            case 'password':
-                valid = new RegExp('^[a-zA-Z0-9._-]{6,}$').test(token);
-                break;
-            case 'text':
-                valid = new RegExp('^[a-zA-Z0-9._-]{3,}$').test(token);
-                break;
-            case 'number':
-                valid = new RegExp('^[0-9]{1,}$').test(token);
-                break;
-            case 'tel':
-                valid = new RegExp('^[0-9]{10}$').test(token);
-                break;
-            case 'date':
-                valid = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$').test(token);
-                break;
-            case 'checkbox':
-                valid = true;
-                break;
-            default:
-                valid = false;
-                break;
-        }
-        return valid;
-    }
-
-    static formCheck(controls: Control[]): boolean {
-        let valid = true;
-        controls.forEach((control) => {
-            if (control instanceof HTMLInputElement) {
-                if (!Validator.controlCheck(control.type, control.value)) {
-                    valid = false;
-                }
+        if (config.minLength) {
+            if (control.value.length < config.minLength) {
+                return valid;
             }
-        });
+        } else if (config.maxLength) {
+            if (control.value.length > config.maxLength) {
+                return valid;
+            }
+        } else if (config.custonPattern) {
+            const pattern = new RegExp(config.custonPattern);
+            if (!pattern.test(control.value)) {
+                return valid;
+            }
+        } else if (config.allowSpecialChars) {
+            const pattern = new RegExp(/^[a-zA-Z0-9]+$/);
+            if (!pattern.test(control.value)) {
+                return valid;
+            }
+        }
+        valid = true;
+
         return valid;
     }
+    //
+    // static formCheck(controls: Control[]): boolean {
+    //     let valid = true;
+    //     controls.forEach((control) => {
+    //         if (control instanceof HTMLInputElement) {
+    //             if (!Validator.inputCheck(control.type, control.value)) {
+    //                 valid = false;
+    //             }
+    //         }
+    //     });
+    //     return valid;
+    // }
 }

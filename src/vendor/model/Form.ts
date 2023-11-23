@@ -41,12 +41,6 @@ export class Form {
 
     build(config: IForm) {
         this._form = Builder.buildForm(config, this._form);
-        // if (this.config.controls) {
-        //     const keys = Object.keys(this.opts);
-        //     for (let i = 0; i < keys.length; i++) {
-        //         this._form.setAttribute(keys[i], this.opts[keys[i]]);
-        //     }
-        // }
         return this;
     }
 
@@ -62,26 +56,25 @@ export class Form {
             }
         }
         this.controls.push(control);
-        this._form.querySelector('#body')!.appendChild(control.getControl());
+        this._form.querySelector('#body')!.appendChild(control.control);
         return this;
     }
 
-    wrap(control: Control[]) {
+    wrap(controls: TControls[]) {
         const wrapper = document.createElement('div');
-        for (let i = 0; i < control.length; i++) {
-            control[i].dom_element.classList.add('col-12', 'col-md');
-            this.values[control[i].name.replace(' ', '_')] = '';
-            wrapper.appendChild(control[i].dom_element);
-            this.controls.push(control[i]);
-            if (control[i].name === '') {
-                throw new Error('You must specify a name for your input');
-            } else if (control[i].label === '') {
-                throw new Error('You must specify a label for your input');
-            }
 
+        for (let i = 0; i < controls.length; i++) {
+            controls[i].control.classList.add('col-12', 'col-md');
+            wrapper.appendChild(controls[i].control);
+            this.controls.push(controls[i]);
+            if (controls[i].label === '' || controls[i].id === '') {
+                throw new Error('You must specify valid parameters for your control');
+            } else if (controls[i].label === undefined || controls[i].id === undefined) {
+                throw new Error('Some parameters are missing for your control');
+            }
         }
         wrapper.classList.add('row');
-        this._form.appendChild(wrapper);
+        this._form.querySelector('#body')!.appendChild(wrapper);
         return this;
     }
 

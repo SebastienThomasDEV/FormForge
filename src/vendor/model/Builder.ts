@@ -28,7 +28,8 @@ export class Builder {
         return form;
     }
 
-    static buildControl(config: IInput, control: HTMLDivElement): any {
+
+    static buildControl(config: IInput, control: HTMLElement): any {
         control.classList.add('col-12', 'col-md');
         const label = document.createElement('label');
         label.setAttribute('for', config.id);
@@ -65,9 +66,48 @@ export class Builder {
                     }
                 }
                 break;
-            //
-            // case 'textarea':
-            // case 'email':
+            case 'email':
+                const email = document.createElement('input');
+                email.setAttribute('type', config.type);
+                email.setAttribute('id', config.id);
+                email.setAttribute('name', config.id);
+                email.setAttribute('class', 'form-control');
+                email.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(email);
+                if (config.attrs) {
+                    for (const [key, value] of Object.entries(config.attrs)) {
+                        email.setAttribute(key, value);
+                    }
+                }
+                if (config.options) {
+                    if (config.options.helperText) {
+                        email.onfocus = () => {
+                            document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
+                        }
+                        email.onblur = () => {
+                            document.getElementById(`${config.id}Help`)!.classList.add('d-none');
+                        }
+                        const helper = document.createElement('small');
+                        helper.classList.add('form-text', 'text-muted');
+                        helper.textContent = config.options.helperText;
+                        helper.id = `${config.id}Help`;
+                        control.appendChild(helper);
+                    }
+                }
+                break;
+            case 'password':
+                const password = document.createElement('input');
+                password.setAttribute('type', config.type);
+                password.setAttribute('id', config.id);
+                password.setAttribute('name', config.id);
+                password.setAttribute('class', 'form-control');
+                password.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(password);
+                if (config.attrs) {
+                    for (const [key, value] of Object.entries(config.attrs)) {
+                        password.setAttribute(key, value);
+                    }
+                }
             // case 'password':
             // case 'number':
             // case 'date':

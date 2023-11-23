@@ -35,6 +35,12 @@ window.onload = function () {
             }
         }))
         .add(new Input({label: 'last_name', id: 'last_name', type: 'text'}))
+        .add(new Input({label: 'email', id: 'email', type: 'email', options: {helperText: 'Must be a valid email'}}))
+        .add(new Input({label: 'password', id: 'password', type: 'password', options: {helperText: 'Must be at least 2 characters long'}}))
+        .wrap([
+            new Input({label: 'city', id: 'city', type: 'text'}),
+            new Input({label: 'zip_code', id: 'zip_code', type: 'text'}),
+        ])
         .render(document.body);
 
 }
