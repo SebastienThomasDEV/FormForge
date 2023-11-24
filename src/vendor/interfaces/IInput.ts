@@ -8,5 +8,4 @@ export interface IInput {
     label: string;
     attrs?: IInputAttrs;
     options?: IInputOptions;
-
 }

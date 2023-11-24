@@ -4,5 +4,5 @@ export interface IValidatorOptions {
     message?: string;
     minLength?: number;
     maxLength?: number;
-    custonPattern?: string;
+    customPattern?: string;
 }

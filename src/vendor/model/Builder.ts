@@ -36,35 +36,16 @@ export class Builder {
         label.classList.add('form-label');
         label.textContent = config.label;
         control.appendChild(label);
+        let input = document.createElement('input');
         switch (config.type) {
             case 'text':
-                const input = document.createElement('input');
                 input.setAttribute('type', config.type);
                 input.setAttribute('id', config.id);
                 input.setAttribute('name', config.id);
                 input.setAttribute('class', 'form-control');
                 input.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(input);
-                if (config.attrs) {
-                    for (const [key, value] of Object.entries(config.attrs)) {
-                        input.setAttribute(key, value);
-                    }
-                }
-                if (config.options) {
-                    if (config.options.helperText) {
-                        input.onfocus = () => {
-                            document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
-                        }
-                        input.onblur = () => {
-                            document.getElementById(`${config.id}Help`)!.classList.add('d-none');
-                        }
-                        const helper = document.createElement('small');
-                        helper.classList.add('form-text', 'text-muted');
-                        helper.textContent = config.options.helperText;
-                        helper.id = `${config.id}Help`;
-                        control.appendChild(helper);
-                    }
-                }
+                if (config.options) control = this.buildOptions(config, input, control)
                 break;
             case 'email':
                 const email = document.createElement('input');
@@ -74,26 +55,7 @@ export class Builder {
                 email.setAttribute('class', 'form-control');
                 email.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(email);
-                if (config.attrs) {
-                    for (const [key, value] of Object.entries(config.attrs)) {
-                        email.setAttribute(key, value);
-                    }
-                }
-                if (config.options) {
-                    if (config.options.helperText) {
-                        email.onfocus = () => {
-                            document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
-                        }
-                        email.onblur = () => {
-                            document.getElementById(`${config.id}Help`)!.classList.add('d-none');
-                        }
-                        const helper = document.createElement('small');
-                        helper.classList.add('form-text', 'text-muted');
-                        helper.textContent = config.options.helperText;
-                        helper.id = `${config.id}Help`;
-                        control.appendChild(helper);
-                    }
-                }
+                if (config.options) control = this.buildOptions(config, input, control)
                 break;
             case 'password':
                 const password = document.createElement('input');
@@ -103,48 +65,64 @@ export class Builder {
                 password.setAttribute('class', 'form-control');
                 password.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(password);
-                if (config.attrs) {
-                    for (const [key, value] of Object.entries(config.attrs)) {
-                        password.setAttribute(key, value);
-                    }
-                }
-            // case 'password':
-            // case 'number':
+                if (config.options) control = this.buildOptions(config, input, control)
+                break;
+            case 'textarea':
+                const textarea = document.createElement('textarea');
+                textarea.setAttribute('id', config.id);
+                textarea.setAttribute('name', config.id);
+                textarea.setAttribute('class', 'form-control');
+                textarea.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(textarea);
+                if (config.options) control = this.buildOptions(config, textarea, control)
+                break;
+            case 'checkbox':
+                // changer le design
+                const checkbox = document.createElement('input');
+                checkbox.setAttribute('type', config.type);
+                checkbox.setAttribute('id', config.id);
+                checkbox.setAttribute('name', config.id);
+                checkbox.setAttribute('class', 'form-check-input');
+                checkbox.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(checkbox);
+                if (config.options) control = this.buildOptions(config, checkbox, control)
+                break;
+            case 'number':
+                const number = document.createElement('input');
+                number.setAttribute('type', config.type);
+                number.setAttribute('id', config.id);
+                number.setAttribute('name', config.id);
+                number.setAttribute('class', 'form-control');
+                number.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(number);
+                if (config.options) control = this.buildOptions(config, number, control)
+                break;
             // case 'date':
             // case 'time':
             // case 'datetime-local':
             // case 'color':
 
         }
-        // if (opts) {
-        //     if (opts.required) {
-        //         control.setAttribute('required', '');
-        //     }
-        //     if (opts.placeholder) {
-        //         control.setAttribute('placeholder', opts.placeholder);
-        //     }
-        //     if (opts.value) {
-        //         control.setAttribute('value', opts.value);
-        //     }
-        //     if (opts.label) {
-        //         const label = document.createElement('label');
-        //         label.setAttribute('for', name);
-        //         label.innerText = opts.label;
-        //         control.parentNode!.insertBefore(label, control);
-        //     }
-        //     if (opts.options) {
-        //         for (let i = 0; i < opts.options.length; i++) {
-        //             const option = document.createElement('option');
-        //             option.setAttribute('value', opts.options[i].value);
-        //             option.innerText = opts.options[i].text;
-        //             control.appendChild(option);
-        //         }
-        //     }
-        //
-        //
-        // }
         return control;
+    }
 
-
+    static buildOptions(config: IInput, input: any, control: any): any {
+        if (config.options) {
+            if (config.options.helperText) {
+                input.onfocus = () => {
+                    document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
+                    console.log('focus');
+                }
+                input.onblur = () => {
+                    document.getElementById(`${config.id}Help`)!.classList.add('d-none');
+                }
+                const helper = document.createElement('small');
+                helper.classList.add('form-text', 'text-muted', 'd-none');
+                helper.textContent = config.options.helperText;
+                helper.id = `${config.id}Help`;
+                control.appendChild(helper);
+            }
+        }
+        return control;
     }
 }

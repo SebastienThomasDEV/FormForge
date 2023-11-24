@@ -34,7 +34,8 @@ window.onload = function () {
                 helperText: 'Must be at least 2 characters long',
             }
         }))
-        .add(new Input({label: 'last_name', id: 'last_name', type: 'text'}))
+        .add(new Input({label: 'last_name', id: 'last_name', type: 'text', attrs: {placeholder: 'Last name'}}))
+        .add(new Input({label: 'last_name', id: 'qzd', type: 'number', attrs: {placeholder: 'Last name'}}))
         .add(new Input({label: 'email', id: 'email', type: 'email', options: {helperText: 'Must be a valid email'}}))
         .add(new Input({label: 'password', id: 'password', type: 'password', options: {helperText: 'Must be at least 2 characters long'}}))
         .wrap([
