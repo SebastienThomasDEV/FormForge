@@ -1,5 +1,6 @@
 import {IForm} from "../interfaces/IForm";
 import {IInput} from "../interfaces/IInput";
+import {Validator} from "./Validator";
 
 export class Builder {
     static buildForm(config: IForm, form: HTMLFormElement): HTMLFormElement {
@@ -46,6 +47,7 @@ export class Builder {
                 input.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(input);
                 if (config.options) control = this.buildOptions(config, input, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'email':
                 const email = document.createElement('input');
@@ -111,7 +113,6 @@ export class Builder {
             if (config.options.helperText) {
                 input.onfocus = () => {
                     document.getElementById(`${config.id}Help`)!.classList.remove('d-none');
-                    console.log('focus');
                 }
                 input.onblur = () => {
                     document.getElementById(`${config.id}Help`)!.classList.add('d-none');
@@ -121,6 +122,30 @@ export class Builder {
                 helper.textContent = config.options.helperText;
                 helper.id = `${config.id}Help`;
                 control.appendChild(helper);
+            }
+        }
+        return control;
+    }
+
+
+    static buildValidation(config: IInput, input: any, control: any): any {
+        const error = document.createElement('span');
+        error.classList.add('invalid-feedback');
+        error.textContent = config.validator?.options?.errorMessage || 'Invalid input !';
+        control.appendChild(error);
+        const valid = document.createElement('span');
+        valid.classList.add('valid-feedback');
+        valid.textContent = config.validator?.options?.validMessage || 'Valid input !';
+        control.appendChild(valid);
+        // call validator to check input
+        input.oninput = () => {
+            console.log(Validator.checkInput(input, config.validator?.options));
+            if (Validator.checkInput(input, config.validator?.options)) {
+                input.classList.remove('is-invalid');
+                input.classList.add('is-valid');
+            } else {
+                input.classList.remove('is-valid');
+                input.classList.add('is-invalid');
             }
         }
         return control;

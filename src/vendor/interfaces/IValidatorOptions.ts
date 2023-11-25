@@ -1,5 +1,7 @@
 export interface IValidatorOptions {
-    allowEmpty?: boolean;
+    allowEmpty?: boolean
+    errorMessage?: string;
+    validMessage?: string;
     allowSpecialChars?: boolean;
     message?: string;
     minLength?: number;

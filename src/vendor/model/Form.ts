@@ -1,6 +1,5 @@
 import {Control} from "./Control.ts";
 // import {IFormOptions} from "./../interfaces/IFormOptions.ts";
-import {Validator} from "./Validator";
 import {TControls} from "../types/TControls";
 import {Builder} from "./Builder";
 import {IForm} from "../interfaces/IForm";
@@ -62,7 +61,6 @@ export class Form {
 
     wrap(controls: TControls[]) {
         const wrapper = document.createElement('div');
-
         for (let i = 0; i < controls.length; i++) {
             controls[i].control.classList.add('col-12', 'col-md');
             wrapper.appendChild(controls[i].control);
@@ -79,46 +77,46 @@ export class Form {
     }
 
 
-    private check() {
-        this.controls.forEach((control: Control) => {
-            control.dom_element.addEventListener('focusin', (e: FocusEvent) => {
-                const target = e.target as HTMLInputElement;
-                const keys = Object.keys(this.values);
-                if (!control.checked) {
-                    // @ts-ignore
-                    target.addEventListener('input', (e: Event) => {
-                        control.checked = true;
-                        for (let i = 0; i < keys.length; i++) {
-                            if (keys[i] === target.name) {
-                                this.values[keys[i]] = target.value;
-                            }
-                        }
-                        if (Validator.controlCheck(target.type, target.value)) {
-                            target.classList.remove('is-invalid');
-                            target.classList.add('is-valid');
-                        } else {
-                            target.classList.remove('is-valid');
-                            target.classList.add('is-invalid');
-                        }
-                        if (target.value === '') {
-                            target.classList.remove('is-valid');
-                            target.classList.add('is-invalid');
-                        }
-                    });
-                    // @ts-ignore
-                    target.addEventListener('blur', (e: Event) => {
-                        setTimeout(() => {
-                            target.classList.remove('is-valid');
-                        }, 1000)
-                        for (let i = 0; i < keys.length; i++) {
-                            if (keys[i] === target.name) {
-                                this.values[keys[i]] = target.value;
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    }
+    // private check() {
+    //     this.controls.forEach((control: Control) => {
+    //         control.dom_element.addEventListener('focusin', (e: FocusEvent) => {
+    //             const target = e.target as HTMLInputElement;
+    //             const keys = Object.keys(this.values);
+    //             if (!control.checked) {
+    //                 // @ts-ignore
+    //                 target.addEventListener('input', (e: Event) => {
+    //                     control.checked = true;
+    //                     for (let i = 0; i < keys.length; i++) {
+    //                         if (keys[i] === target.name) {
+    //                             this.values[keys[i]] = target.value;
+    //                         }
+    //                     }
+    //                     if (Validator.inputCheck(target, control.validator)) {
+    //                         target.classList.remove('is-invalid');
+    //                         target.classList.add('is-valid');
+    //                     } else {
+    //                         target.classList.remove('is-valid');
+    //                         target.classList.add('is-invalid');
+    //                     }
+    //                     if (target.value === '') {
+    //                         target.classList.remove('is-valid');
+    //                         target.classList.add('is-invalid');
+    //                     }
+    //                 });
+    //                 // @ts-ignore
+    //                 target.addEventListener('blur', (e: Event) => {
+    //                     setTimeout(() => {
+    //                         target.classList.remove('is-valid');
+    //                     }, 1000)
+    //                     for (let i = 0; i < keys.length; i++) {
+    //                         if (keys[i] === target.name) {
+    //                             this.values[keys[i]] = target.value;
+    //                         }
+    //                     }
+    //                 });
+    //             }
+    //         });
+    //     });
+    // }
 
 }
