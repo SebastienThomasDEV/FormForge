@@ -45,8 +45,8 @@ export class Builder {
                 input.setAttribute('name', config.id);
                 input.setAttribute('class', 'form-control');
                 input.setAttribute('aria-describedby', `${config.id}Help`);
-                control.appendChild(input);
                 if (config.options) control = this.buildOptions(config, input, control)
+                control.appendChild(input);
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'email':
@@ -58,6 +58,7 @@ export class Builder {
                 email.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(email);
                 if (config.options) control = this.buildOptions(config, input, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'password':
                 const password = document.createElement('input');
@@ -68,6 +69,7 @@ export class Builder {
                 password.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(password);
                 if (config.options) control = this.buildOptions(config, input, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'textarea':
                 const textarea = document.createElement('textarea');
@@ -77,6 +79,7 @@ export class Builder {
                 textarea.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(textarea);
                 if (config.options) control = this.buildOptions(config, textarea, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'checkbox':
                 // changer le design
@@ -88,6 +91,7 @@ export class Builder {
                 checkbox.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(checkbox);
                 if (config.options) control = this.buildOptions(config, checkbox, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             case 'number':
                 const number = document.createElement('input');
@@ -98,6 +102,7 @@ export class Builder {
                 number.setAttribute('aria-describedby', `${config.id}Help`);
                 control.appendChild(number);
                 if (config.options) control = this.buildOptions(config, number, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
             // case 'date':
             // case 'time':
@@ -118,7 +123,7 @@ export class Builder {
                     document.getElementById(`${config.id}Help`)!.classList.add('d-none');
                 }
                 const helper = document.createElement('small');
-                helper.classList.add('form-text', 'text-muted', 'd-none');
+                helper.classList.add('text-muted', 'd-none', 'mx-3');
                 helper.textContent = config.options.helperText;
                 helper.id = `${config.id}Help`;
                 control.appendChild(helper);
@@ -143,6 +148,10 @@ export class Builder {
             if (Validator.checkInput(input, config.validator?.options)) {
                 input.classList.remove('is-invalid');
                 input.classList.add('is-valid');
+            }
+            if (input.value === '') {
+                input.classList.remove('is-valid');
+                input.classList.add('is-invalid');
             } else {
                 input.classList.remove('is-valid');
                 input.classList.add('is-invalid');
