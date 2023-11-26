@@ -32,11 +32,7 @@ export class Builder {
 
     static buildControl(config: IInput, control: HTMLElement): any {
         control.classList.add('col-12', 'col-md');
-        const label = document.createElement('label');
-        label.setAttribute('for', config.id);
-        label.classList.add('form-label');
-        label.textContent = config.label;
-        control.appendChild(label);
+        control.classList.add('p-2');
         let input = document.createElement('input');
         switch (config.type) {
             case 'text':
@@ -45,6 +41,7 @@ export class Builder {
                 input.setAttribute('name', config.id);
                 input.setAttribute('class', 'form-control');
                 input.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
                 if (config.options) control = this.buildOptions(config, input, control)
                 control.appendChild(input);
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
@@ -56,6 +53,7 @@ export class Builder {
                 email.setAttribute('name', config.id);
                 email.setAttribute('class', 'form-control');
                 email.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
                 control.appendChild(email);
                 if (config.options) control = this.buildOptions(config, input, control)
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
@@ -67,6 +65,7 @@ export class Builder {
                 password.setAttribute('name', config.id);
                 password.setAttribute('class', 'form-control');
                 password.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
                 control.appendChild(password);
                 if (config.options) control = this.buildOptions(config, input, control)
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
@@ -77,6 +76,7 @@ export class Builder {
                 textarea.setAttribute('name', config.id);
                 textarea.setAttribute('class', 'form-control');
                 textarea.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
                 control.appendChild(textarea);
                 if (config.options) control = this.buildOptions(config, textarea, control)
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
@@ -87,9 +87,12 @@ export class Builder {
                 checkbox.setAttribute('type', config.type);
                 checkbox.setAttribute('id', config.id);
                 checkbox.setAttribute('name', config.id);
-                checkbox.setAttribute('class', 'form-check-input');
                 checkbox.setAttribute('aria-describedby', `${config.id}Help`);
+                const label = this.buildLabel(config);
+                label.classList.add('form-check-label');
+                checkbox.classList.add('form-check-input');
                 control.appendChild(checkbox);
+                control.appendChild(label);
                 if (config.options) control = this.buildOptions(config, checkbox, control)
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
@@ -100,14 +103,23 @@ export class Builder {
                 number.setAttribute('name', config.id);
                 number.setAttribute('class', 'form-control');
                 number.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
                 control.appendChild(number);
                 if (config.options) control = this.buildOptions(config, number, control)
                 if (config.validator?.enable) control = this.buildValidation(config, input, control)
                 break;
-            // case 'date':
-            // case 'time':
-            // case 'datetime-local':
-            // case 'color':
+            case 'date':
+                const date = document.createElement('input');
+                date.setAttribute('type', config.type);
+                date.setAttribute('id', config.id);
+                date.setAttribute('name', config.id);
+                date.setAttribute('class', 'form-control');
+                date.setAttribute('aria-describedby', `${config.id}Help`);
+                control.appendChild(this.buildLabel(config));
+                control.appendChild(date);
+                if (config.options) control = this.buildOptions(config, date, control)
+                if (config.validator?.enable) control = this.buildValidation(config, input, control)
+                break;
 
         }
         return control;
@@ -158,5 +170,12 @@ export class Builder {
             }
         }
         return control;
+    }
+
+    static buildLabel(config: IInput): HTMLLabelElement {
+        const label = document.createElement('label');
+        label.classList.add('form-label');
+        label.textContent = config.label;
+        return label;
     }
 }

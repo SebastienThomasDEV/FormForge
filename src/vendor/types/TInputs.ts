@@ -1,1 +1,1 @@
-export type TInputs = 'email' | 'password' | 'text' | 'number' | 'tel' | 'date' | 'checkbox' | 'radio' | 'submit' | 'reset' | 'button' | 'file' | 'hidden' | 'image' | 'range' | 'search' | 'textarea'
+export type TInputs = 'email' | 'password' | 'text' | 'number'  | 'date' | 'checkbox' | 'radio' | 'file' | 'range' | 'textarea'

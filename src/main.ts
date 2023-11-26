@@ -34,18 +34,26 @@ window.onload = function () {
                 helperText: 'Must be at least 2 characters long',
             }
         }))
+        .wrap([
+            new Input(
+            {
+                label: 'test-nico',
+                id: 'test-nico',
+                type: 'radio',}),
+            new Input(
+                {
+                    label: 'last_name',
+                    id: 'last_name',
+                    type: 'email',
+                    attrs: {placeholder: 'Last name'},
+                    validator: {enable: true, options: {minLength: 4}}})])
         .add(new Input(
             {
-                label: 'last_name', id: 'last_name', type: 'text',
+                label: 'last_name',
+                id: 'last_name',
+                type: 'email',
                 attrs: {placeholder: 'Last name'},
                 validator: {enable: true, options: {minLength: 4}}}))
-        .add(new Input({label: 'last_name', id: 'qzd', type: 'number', attrs: {placeholder: 'Last name'}}))
-        .add(new Input({label: 'email', id: 'email', type: 'email', options: {helperText: 'Must be a valid email'}}))
-        .add(new Input({label: 'password', id: 'password', type: 'password', options: {helperText: 'Must be at least 2 characters long'}}))
-        .wrap([
-            new Input({label: 'city', id: 'city', type: 'text'}),
-            new Input({label: 'zip_code', id: 'zip_code', type: 'text'}),
-        ])
         .render(document.body);
 
 }
