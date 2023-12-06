@@ -16,44 +16,34 @@ window.onload = function () {
         {
             id: 'form',
             class: 'form',
-            title: 'Formulaire de test',
             options: {
                 novalidate: true,   // disable HTML5 validation
                 action: '#',
                 method: 'POST',
+                autocomplete: 'off',
+                submitLabel: 'Envoyer'
             }
         },
     )
 
     form.add(new Input(
         {
-            label: 'first_name',
+            label: 'Prénom',
             id: 'first_name',
+            type: 'email',
+            options: {helperText: 'Must be at least 2 characters long'}
+        }))
+    form.add(new Input(
+        {
+            label: 'Nom',
+            id: 'last_name',
             type: 'text',
             options: {
-                helperText: 'Must be at least 2 characters long',
-            }
+                helperText: 'Must be different from first name',
+            },
+
         }))
-        .wrap([
-            new Input(
-            {
-                label: 'test-nico',
-                id: 'test-nico',
-                type: 'radio',}),
-            new Input(
-                {
-                    label: 'last_name',
-                    id: 'last_name',
-                    type: 'email',
-                    attrs: {placeholder: 'Last name'},
-                    validator: {enable: true, options: {minLength: 4}}})])
-        .add(new Input(
-            {
-                label: 'last_name',
-                id: 'last_name',
-                type: 'email',
-                attrs: {placeholder: 'Last name'},
-                validator: {enable: true, options: {minLength: 4}}}))
-        .render(document.body);
+
+    form.render(document.body);
 
 }

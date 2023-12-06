@@ -8,9 +8,6 @@ export class Input extends Control {
     constructor(config: IInput) {
         super(config.id, config.label);
         this.config = config;
-        this.config.validator = {
-            enable: this.config.validator?.enable ?? true,
-        }
         this.control = document.createElement('div');
         this.build(this.config);
     }

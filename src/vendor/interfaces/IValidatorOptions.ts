@@ -1,4 +1,5 @@
 export interface IValidatorOptions {
+    disabled?: boolean;
     allowEmpty?: boolean
     errorMessage?: string;
     validMessage?: string;
@@ -6,5 +7,5 @@ export interface IValidatorOptions {
     message?: string;
     minLength?: number;
     maxLength?: number;
-    customPattern?: string;
+    overridePattern?: string;
 }

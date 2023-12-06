@@ -6,4 +6,5 @@ export interface IFormOptions {
     novalidate?: boolean;
     action?: string;
     method?: string;
+    submitLabel?: string;
 }

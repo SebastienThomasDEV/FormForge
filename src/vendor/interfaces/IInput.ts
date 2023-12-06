@@ -9,8 +9,5 @@ export interface IInput {
     label: string;
     attrs?: IInputAttrs;
     options?: IInputOptions;
-    validator?: {
-        enable: boolean;
-        options?: IValidatorOptions;
-    };
+    validator?: IValidatorOptions;
 }
