@@ -2,7 +2,7 @@ import {Control} from "./Control.ts";
 // import {IFormOptions} from "./../interfaces/IFormOptions.ts";
 import {TControls} from "../types/TControls";
 import {Builder} from "./Builder";
-import {IForm} from "../interfaces/IForm";
+import {IForm} from "../interfaces/form/IForm";
 
 export class Form {
     private _form: HTMLFormElement;

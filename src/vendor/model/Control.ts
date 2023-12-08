@@ -1,4 +1,4 @@
-import {IAttributes} from "../interfaces/IAttributes";
+import {IAttributes} from "../interfaces/input/IAttributes";
 
 export class Control implements IAttributes {
     id: string;

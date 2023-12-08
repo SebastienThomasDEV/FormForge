@@ -1,5 +1,5 @@
-import {IForm} from "../interfaces/IForm";
-import {IInput} from "../interfaces/IInput";
+import {IForm} from "../interfaces/form/IForm";
+import {IInput} from "../interfaces/input/IInput";
 import {Validator} from "./Validator";
 
 export class Builder {
@@ -40,7 +40,7 @@ export class Builder {
         input.setAttribute('name', config.id);
         input.setAttribute('class', 'form-control');
         input.setAttribute('aria-describedby', `${config.id}Help`);
-        control.appendChild(this.buildLabel(config));
+        if (config.label) control.appendChild(this.buildLabel(config));
         if (config.options) control = this.buildOptions(config, input, control)
         control.appendChild(input);
         if (config.validator?.disabled) control = this.buildValidation(config, input, control)
@@ -157,12 +157,12 @@ export class Builder {
 
     static buildValidation(config: IInput, input: any, control: any): any {
         const error = document.createElement('span');
-        error.classList.add('invalid-feedback');
-        error.textContent = config.validator?.errorMessage || 'Invalid input !';
-        control.appendChild(error);
         const valid = document.createElement('span');
+        error.classList.add('invalid-feedback');
         valid.classList.add('valid-feedback');
+        error.textContent = config.validator?.errorMessage || 'Invalid input !';
         valid.textContent = config.validator?.validMessage || 'Valid input !';
+        control.appendChild(error);
         control.appendChild(valid);
         // call validator to check input
         input.oninput = () => {
@@ -185,7 +185,7 @@ export class Builder {
     static buildLabel(config: IInput): HTMLLabelElement {
         const label = document.createElement('label');
         label.classList.add('form-label');
-        label.textContent = config.label;
+        label.textContent = config.label!;
         return label;
     }
 }

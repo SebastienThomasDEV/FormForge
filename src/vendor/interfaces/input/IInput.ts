@@ -1,12 +1,12 @@
 import {IInputOptions} from "./IInputOptions";
-import {TInputs} from "../types/TInputs";
+import {TInputs} from "./../../types/TInputs";
 import {IInputAttrs} from "./IInputAttrs";
-import {IValidatorOptions} from "./IValidatorOptions";
+import {IValidatorOptions} from "../validator/IValidatorOptions";
 
 export interface IInput {
     type: TInputs;
     id: string;
-    label: string;
+    label?: string;
     attrs?: IInputAttrs;
     options?: IInputOptions;
     validator?: IValidatorOptions;

@@ -31,7 +31,9 @@ window.onload = function () {
             label: 'Prénom',
             id: 'first_name',
             type: 'email',
-            options: {helperText: 'Must be at least 2 characters long'}
+            options: {
+                helperText: 'Must be at least 2 characters long'
+            }
         }))
     form.add(new Input(
         {

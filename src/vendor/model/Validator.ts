@@ -1,6 +1,6 @@
 // import {Form} from "./Form";
 // import {Control} from "./Control";
-import {IValidatorOptions} from "../interfaces/IValidatorOptions";
+import {IValidatorOptions} from "../interfaces/validator/IValidatorOptions";
 // import {Control} from "./Control";
 // import {Input} from "../inputs/Input";
 
@@ -9,7 +9,6 @@ export class Validator {
     static checkInput(input: HTMLInputElement, config?: IValidatorOptions): boolean {
         let valid = true;
         if (config) {
-            console.log(config);
             if (input.value === '' && !config.allowEmpty) {
                 console.log('empty and not allowed');
                 return !valid;
@@ -29,8 +28,8 @@ export class Validator {
                     return !valid;
                 }
             }
-            if (config.customPattern) {
-                const pattern = new RegExp(config.customPattern);
+            if (config.overridePattern) {
+                const pattern = new RegExp(config.overridePattern);
                 if (!pattern.test(input.value)) {
                     console.log('pattern not respected');
                     return !valid;
